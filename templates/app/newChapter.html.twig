@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+{% form_theme formNewChapter 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+
+    <h1>
+        {% if titlePage %}
+            Modifier le chapitre
+        {% else %}
+            Ecrire un nouveau chapitre
+        {% endif %}
+    </h1>
+    
+    <hr>
+
+    {{ form_start(formNewChapter) }}
+
+    {{ form_row(formNewChapter.title) }}
+    {{ form_row(formNewChapter.content) }}
+    {{ form_row(formNewChapter.completed) }}
+    {{ form_row(formNewChapter.public) }}
+    
+
+    <button type="submit" class="btn btn-success">
+        {% if editMode %}
+            Enregistrer les modifications
+        {% else %}
+            Créer le chapitre
+        {% endif %}
+    </button>
+
+    {{ form_end(formNewChapter) }}
+
+{% endblock %}

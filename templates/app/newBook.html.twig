@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+{% form_theme formNewBook 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+
+    <h1>
+        {% if titlePage %}
+            Modifier le livre
+        {% else %}
+            Créer un nouveau livre
+        {% endif %}
+    </h1>
+    
+    <hr>
+
+    {{ form_start(formNewBook) }}
+
+    {{ form_row(formNewBook.title) }}
+    {{ form_row(formNewBook.content) }}
+    {{ form_row(formNewBook.completed) }}
+    {{ form_row(formNewBook.public) }}
+    
+
+    <button type="submit" class="btn btn-success">
+        {% if editMode %}
+            Modifier les détails du livre
+        {% else %}
+            Créer le livre
+        {% endif %}
+    </button>
+
+    {{ form_end(formNewBook) }}
+
+{% endblock %}

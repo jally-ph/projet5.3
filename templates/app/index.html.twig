@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AppController!{% endblock %}
+
+{% block body %}
+    <section class="liveBooks">
+
+    {% for book in books %}
+        <article>
+            <img src="http://placehold.it/150x150" alt="cover">
+            <h2>{{ book.title }}</h2>
+            <div>{{ book.content | raw }}</div>
+            <p>publié le {{ book.date | date('d/m/Y') }} à {{ book.date | date('H:i') }}</p>
+            <a href="{{ path('app_show', {'id': book.id }) }}">Lire la suite</a>
+        </article>
+    {% endfor %}
+
+    {{ knp_pagination_render(books) }}
+
+
+    
+    </section>
+{% endblock %}

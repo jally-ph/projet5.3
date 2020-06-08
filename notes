@@ -1,0 +1,8 @@
+
+- faire que le nom de l'auteur soit égal au nom de l'utilisateur :
+
+à la connection > à la création de livre ou de comment reprendre le nom du user connecté
+
+form de com > faire que le app.user.username soit pris et retenu et qu'on puisse pas le changer
+
+https://symfonycasts.com/screencast/symfony-security/make-user
