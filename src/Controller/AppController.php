@@ -67,6 +67,14 @@ class AppController extends AbstractController
     }
 
     /**
+     * @Route("/categories", name="categories")
+     */
+    public function categoryPage()
+    {
+        return $this->render('app/categories.html.twig');
+    }
+
+    /**
      * @Route("/search/{search}", name="search")
      */
     public function search($search, Request $request){
@@ -82,6 +90,20 @@ class AppController extends AbstractController
             }
         }
         dd($search);
+    }
+
+    /**
+     * @Route("/category/{category}", name="show_category")
+     */
+    public function getCategory($category)
+    {
+        $bookRepository = $this->getDoctrine()->getRepository(Books::class);
+        $books = $bookRepository->findByCategory($category);
+
+        return $this->render('app/category.html.twig', [
+            'books' => $books,
+            'category' => $category
+        ]);
     }
 
     /**

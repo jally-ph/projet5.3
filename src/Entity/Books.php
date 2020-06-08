@@ -71,6 +71,11 @@ class Books
      */
     private $completed;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $category;
+
    
 
 
@@ -183,6 +188,18 @@ class Books
     public function setCompleted(bool $completed): self
     {
         $this->completed = $completed;
+
+        return $this;
+    }
+
+    public function getCategory(): ?string
+    {
+        return $this->category;
+    }
+
+    public function setCategory(string $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }

@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Catégories{% endblock %}
+
+{% block body %}
+
+    <div>
+    
+        <section class="containerCategory" id="fantastiqueCategory">
+            <a href="{{ path('show_category', {'category': 'fantastique' }) }}" class="linkCategory">
+                <h2>Fantastique</h2> 
+                <p>Quand les êtres fantastiques frappent à votre porte.</p>
+            </a>
+        </section>
+
+        <section class="containerCategory" id="romanceCategory">
+            <a href="{{ path('show_category', {'category': 'romance' }) }}" class="linkCategory">
+                <h2>Romance</h2> 
+                <p>Quand les coeurs se retrouvent et se rapprochent.</p>
+            </a>
+        </section>
+    
+    </div>
+    
+
+{% endblock %}
