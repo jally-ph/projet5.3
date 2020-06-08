@@ -4,6 +4,7 @@
     <article>
 
         <h2>{{ book.title }}</h2>
+        <span class="badge badge-pill badge-dark">{{ book.category }}</span>
         <div class="metadata">écrit le {{ book.date | date('d/m/Y') }} à {{ book.date | date('H:i') }}
         par {{ book.author }}</div>
         {% if app.user %}

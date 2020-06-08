@@ -15,6 +15,7 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -45,7 +46,32 @@ class AppController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function home(Request $request)
+    public function home()
+    {
+        // home(Request $request)
+        // $searchForm = $this->createForm(SearchType::class, null);
+
+        // if($request->isMethod("POST")){
+        //     $searchForm->handleRequest($request);
+
+        //     if($searchForm->isSubmitted() && $searchForm->isValid()){
+        //         return $this->redirectToRoute("search", [
+        //             'search' => $searchForm["search"]->getData()
+        //         ]);
+        //     }
+        // }
+
+        return $this->render('app/home.html.twig', [
+            'subtitle' => "Bienvenu sur mon site"
+            // 'form' => $searchForm->createView()
+        ]);
+
+    }
+
+    /**
+     * @Route("/searchForm", name="searchForm")
+     */
+    public function searchForm(Request $request)
     {
         $searchForm = $this->createForm(SearchType::class, null);
 
@@ -59,25 +85,16 @@ class AppController extends AbstractController
             }
         }
 
-        return $this->render('app/home.html.twig', [
-            'subtitle' => "Bienvenu sur mon site",
+        return $this->render('app/formSearch.html.twig', [
             'form' => $searchForm->createView()
         ]);
-
-    }
-
-    /**
-     * @Route("/categories", name="categories")
-     */
-    public function categoryPage()
-    {
-        return $this->render('app/categories.html.twig');
     }
 
     /**
      * @Route("/search/{search}", name="search")
      */
-    public function search($search, Request $request){
+    public function search($search, Request $request)
+    {
         $searchForm = $this->createForm(SearchType::class, null);
 
         if($request->isMethod("POST")){
@@ -90,6 +107,14 @@ class AppController extends AbstractController
             }
         }
         dd($search);
+    }
+
+    /**
+     * @Route("/categories", name="categories")
+     */
+    public function categoryPage()
+    {
+        return $this->render('app/categories.html.twig');
     }
 
     /**
@@ -119,6 +144,16 @@ class AppController extends AbstractController
         $form = $this->createFormBuilder($book)
                     ->add('title')
                     ->add('content')
+                    ->add('category', ChoiceType::class, [
+                        'choices'  => [
+                            'littérature' => 'littérature',
+                            'fantastique' => 'fantastique',
+                            'romance' => 'romance',
+                            'poésie' => 'poésie',
+                            'policier' => 'policier',
+                            'essai' => 'essai'
+                        ],
+                    ])
                     ->add('public')
                     ->add('completed')
                     ->getForm();
