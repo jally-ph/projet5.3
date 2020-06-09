@@ -27,52 +27,7 @@ class AppController extends AbstractController
      */
     public function index(Request $request, PaginatorInterface $paginator, BooksRepository $repo)
     {
-        $donnees = $repo->findAll();
-        // dd($book);
-        $books = $paginator->paginate(
-            $donnees,
-            $request->query->getInt('page', 1),
-            5
-        );
-
-        $books->setTemplate('app/twitter_bootstrap_v4_pagination.html.twig');
-        
-        return $this->render('app/index.html.twig', [
-            'controller_name' => 'AppController',
-            'books' => $books
-        ]);
-    }
-
-    /**
-     * @Route("/", name="home")
-     */
-    public function home()
-    {
-        // home(Request $request)
-        // $searchForm = $this->createForm(SearchType::class, null);
-
-        // if($request->isMethod("POST")){
-        //     $searchForm->handleRequest($request);
-
-        //     if($searchForm->isSubmitted() && $searchForm->isValid()){
-        //         return $this->redirectToRoute("search", [
-        //             'search' => $searchForm["search"]->getData()
-        //         ]);
-        //     }
-        // }
-
-        return $this->render('app/home.html.twig', [
-            'subtitle' => "Bienvenu sur mon site"
-            // 'form' => $searchForm->createView()
-        ]);
-
-    }
-
-    /**
-     * @Route("/searchForm", name="searchForm")
-     */
-    public function searchForm(Request $request)
-    {
+        //barre de recherche
         $searchForm = $this->createForm(SearchType::class, null);
 
         if($request->isMethod("POST")){
@@ -85,9 +40,46 @@ class AppController extends AbstractController
             }
         }
 
-        return $this->render('app/formSearch.html.twig', [
-            'form' => $searchForm->createView()
+        $donnees = $repo->findAll();
+        // dd($book);
+        $books = $paginator->paginate(
+            $donnees,
+            $request->query->getInt('page', 1),
+            5
+        );
+
+        $books->setTemplate('app/twitter_bootstrap_v4_pagination.html.twig');
+        
+        return $this->render('app/index.html.twig', [
+            'controller_name' => 'AppController',
+            'books' => $books,
+            'formSearch' => $searchForm->createView()
         ]);
+    }
+
+    /**
+     * @Route("/", name="home")
+     */
+    public function home(Request $request)
+    {
+        //barre de recherche
+        $searchForm = $this->createForm(SearchType::class, null);
+
+        if($request->isMethod("POST")){
+            $searchForm->handleRequest($request);
+
+            if($searchForm->isSubmitted() && $searchForm->isValid()){
+                return $this->redirectToRoute("search", [
+                    'search' => $searchForm["search"]->getData()
+                ]);
+            }
+        }
+
+        return $this->render('app/home.html.twig', [
+            'subtitle' => "Bienvenu sur mon site",
+            'formSearch' => $searchForm->createView()
+        ]);
+
     }
 
     /**
@@ -109,25 +101,55 @@ class AppController extends AbstractController
         dd($search);
     }
 
+    
     /**
      * @Route("/categories", name="categories")
      */
-    public function categoryPage()
+    public function categoryPage(Request $request)
     {
-        return $this->render('app/categories.html.twig');
+        // barrre de recherche
+        $searchForm = $this->createForm(SearchType::class, null);
+
+        if($request->isMethod("POST")){
+            $searchForm->handleRequest($request);
+
+            if($searchForm->isSubmitted() && $searchForm->isValid()){
+                return $this->redirectToRoute("search", [
+                    'search' => $searchForm["search"]->getData()
+                ]);
+            }
+        }
+
+        return $this->render('app/categories.html.twig', [
+            'formSearch' => $searchForm->createView()
+        ]);
     }
 
     /**
      * @Route("/category/{category}", name="show_category")
      */
-    public function getCategory($category)
+    public function getCategory($category, Request $request)
     {
+        // barrre de recherche
+        $searchForm = $this->createForm(SearchType::class, null);
+
+        if($request->isMethod("POST")){
+            $searchForm->handleRequest($request);
+
+            if($searchForm->isSubmitted() && $searchForm->isValid()){
+                return $this->redirectToRoute("search", [
+                    'search' => $searchForm["search"]->getData()
+                ]);
+            }
+        }
+
         $bookRepository = $this->getDoctrine()->getRepository(Books::class);
         $books = $bookRepository->findByCategory($category);
 
         return $this->render('app/category.html.twig', [
             'books' => $books,
-            'category' => $category
+            'category' => $category,
+            'formSearch' => $searchForm->createView()
         ]);
     }
 
@@ -136,6 +158,18 @@ class AppController extends AbstractController
      */
     public function newBook(Books $book = null, Request $request, EntityManagerInterface $manager, UserInterface $user)
     {
+        // barrre de recherche
+        $searchForm = $this->createForm(SearchType::class, null);
+
+        if($request->isMethod("POST")){
+            $searchForm->handleRequest($request);
+
+            if($searchForm->isSubmitted() && $searchForm->isValid()){
+                return $this->redirectToRoute("search", [
+                    'search' => $searchForm["search"]->getData()
+                ]);
+            }
+        }
 
         if(!$book){
             $book = new Books();
@@ -176,7 +210,8 @@ class AppController extends AbstractController
         return $this->render('app/newBook.html.twig', [
             'formNewBook' => $form->createView(),
             'titlePage' => $book->getId() !== null,
-            'editMode' => $book->getId() !== null
+            'editMode' => $book->getId() !== null,
+            'formSearch' => $searchForm->createView()
         ]);
     }
 
@@ -185,6 +220,18 @@ class AppController extends AbstractController
      */
     public function newChapter($id, Chapter $chapter = null, Request $request, EntityManagerInterface $manager)
     {
+        // barrre de recherche
+        $searchForm = $this->createForm(SearchType::class, null);
+
+        if($request->isMethod("POST")){
+            $searchForm->handleRequest($request);
+
+            if($searchForm->isSubmitted() && $searchForm->isValid()){
+                return $this->redirectToRoute("search", [
+                    'search' => $searchForm["search"]->getData()
+                ]);
+            }
+        }
 
         if(!$chapter){
             $chapter = new Chapter();
@@ -217,7 +264,8 @@ class AppController extends AbstractController
         return $this->render('app/newChapter.html.twig', [
             'formNewChapter' => $form->createView(),
             'titlePage' => $chapter->getId() !== null,
-            'editMode' => $chapter->getId() !== null
+            'editMode' => $chapter->getId() !== null,
+            'formSearch' => $searchForm->createView()
         ]);
     }
 
@@ -225,18 +273,30 @@ class AppController extends AbstractController
     /**
      * @Route("/app/{id}", name="app_show")
      */
-    public function showBook($id, Books $book)
+    public function showBook($id, Books $book, Request $request)
     {
+        // barrre de recherche
+        $searchForm = $this->createForm(SearchType::class, null);
+
+        if($request->isMethod("POST")){
+            $searchForm->handleRequest($request);
+
+            if($searchForm->isSubmitted() && $searchForm->isValid()){
+                return $this->redirectToRoute("search", [
+                    'search' => $searchForm["search"]->getData()
+                ]);
+            }
+        }
+
         $booksRepository = $this->getDoctrine()->getRepository(Books::class);
         $book = $booksRepository->find($id);
         $chapterRepository = $this->getDoctrine()->getRepository(Chapter::class);
         $chapters = $chapterRepository->findAllByBook($book->getId());
-        
-
 
         return $this->render('app/showBook.html.twig', [
             'book' => $book,
-            'chapters' => $chapters
+            'chapters' => $chapters,
+            'formSearch' => $searchForm->createView()
         ]);
     }
 
@@ -245,6 +305,19 @@ class AppController extends AbstractController
      */
     public function showChapter($id, Chapter $chapter, Comment $comment = null, Request $request, EntityManagerInterface $manager, UserInterface $user = null)
     {
+        // barrre de recherche
+        $searchForm = $this->createForm(SearchType::class, null);
+
+        if($request->isMethod("POST")){
+            $searchForm->handleRequest($request);
+
+            if($searchForm->isSubmitted() && $searchForm->isValid()){
+                return $this->redirectToRoute("search", [
+                    'search' => $searchForm["search"]->getData()
+                ]);
+            }
+        }
+
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
 
@@ -269,7 +342,8 @@ class AppController extends AbstractController
         return $this->render('app/showChapter.html.twig', [
             'chapter' => $chapter,
             'commentForm' => $form->createView(),
-            'comments' => $comments
+            'comments' => $comments,
+            'formSearch' => $searchForm->createView()
         ]);
     }
 
@@ -279,7 +353,18 @@ class AppController extends AbstractController
       */
      public function editComment($id, Comment $comment, Request $request, EntityManagerInterface $manager)
      {
-     
+        // barrre de recherche
+        $searchForm = $this->createForm(SearchType::class, null);
+
+        if($request->isMethod("POST")){
+            $searchForm->handleRequest($request);
+
+            if($searchForm->isSubmitted() && $searchForm->isValid()){
+                return $this->redirectToRoute("search", [
+                    'search' => $searchForm["search"]->getData()
+                ]);
+            }
+        }
         
         $form = $this->createForm(CommentType::class, $comment);
 
@@ -302,7 +387,8 @@ class AppController extends AbstractController
         }
 
         return $this->render('app/formEditComment.html.twig', [
-             'formEditComment' => $form->createView()
+             'formEditComment' => $form->createView(),
+             'formSearch' => $searchForm->createView()
          ]);
     }
 
@@ -311,7 +397,18 @@ class AppController extends AbstractController
      */
     public function editChapter($id, Chapter $chapter, Request $request, EntityManagerInterface $manager)
     {
+        // barrre de recherche
+        $searchForm = $this->createForm(SearchType::class, null);
 
+        if($request->isMethod("POST")){
+            $searchForm->handleRequest($request);
+
+            if($searchForm->isSubmitted() && $searchForm->isValid()){
+                return $this->redirectToRoute("search", [
+                    'search' => $searchForm["search"]->getData()
+                ]);
+            }
+        }
      
         $form = $this->createFormBuilder($chapter)
                     ->add('title')
@@ -336,7 +433,8 @@ class AppController extends AbstractController
         return $this->render('app/newChapter.html.twig', [
             'formNewChapter' => $form->createView(),
             'titlePage' => $chapter->getId() !== null,
-            'editMode' => $chapter->getId() !== null
+            'editMode' => $chapter->getId() !== null,
+            'formSearch' => $searchForm->createView()
         ]);
     }
 
@@ -345,6 +443,19 @@ class AppController extends AbstractController
      */
     public function editBook($id, Books $book, Request $request, EntityManagerInterface $manager, UserInterface $user)
     {
+        // barrre de recherche
+        $searchForm = $this->createForm(SearchType::class, null);
+
+        if($request->isMethod("POST")){
+            $searchForm->handleRequest($request);
+
+            if($searchForm->isSubmitted() && $searchForm->isValid()){
+                return $this->redirectToRoute("search", [
+                    'search' => $searchForm["search"]->getData()
+                ]);
+            }
+        }
+
         $form = $this->createFormBuilder($book)
                     ->add('title')
                     ->add('content')
@@ -374,7 +485,8 @@ class AppController extends AbstractController
         return $this->render('app/newBook.html.twig', [
             'formNewBook' => $form->createView(),
             'titlePage' => $book->getId() !== null,
-            'editMode' => $book->getId() !== null
+            'editMode' => $book->getId() !== null,
+            'formSearch' => $searchForm->createView()
         ]);
     }
 
