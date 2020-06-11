@@ -4,6 +4,7 @@ namespace App\Controller;
 
 
 use App\Entity\User;
+use App\Entity\Books;
 use App\Form\SearchType;
 use App\Form\RegistrationType;
 use Symfony\Component\Form\FormView;
@@ -95,6 +96,10 @@ class SecurityController extends AbstractController
                 ]);
             }
         }
-        dd($search);
+        
+        $bookRepository = $this->getDoctrine()->getRepository(Books::class);
+        $book = $bookRepository->findByTitle($search);
+        dd($book);
+
     }
 }

@@ -29,6 +29,38 @@ class BooksRepository extends ServiceEntityRepository
         ;
     }
 
+    // public function findByTitle($motcle)
+    // {
+    //     return $this->createQueryBuilder('a')
+    //         ->andWhere('a.title LIKE :motcle')
+    //         ->setParameter('motcle', '%'.$motcle.'%')
+    //         ->getQuery()
+    //         ->getResult()
+    //     ;
+    // }
+
+    public function findzzzByTitle($search)
+    {
+        return $this->createQueryBuilder(
+            'SELECT title
+            FROM App\Entity\Books title
+            WHERE title
+            LIKE % keyword %'
+        )
+            ->setParameter('keyword', '%'.$search.'%')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findByTitle($keyword){
+        $query = $this->createQueryBuilder('a')
+            ->where('a.title LIKE :key')->orWhere('a.title LIKE :key')
+            ->setParameter('key' , '%'.$keyword.'%')->getQuery();
+ 
+        return $query->getResult();
+    }
+
     // /**
     //  * @return Books[] Returns an array of Books objects
     //  */
