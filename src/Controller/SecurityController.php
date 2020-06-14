@@ -98,8 +98,33 @@ class SecurityController extends AbstractController
         }
         
         $bookRepository = $this->getDoctrine()->getRepository(Books::class);
-        $book = $bookRepository->findByTitle($search);
-        dd($book);
+        $books = $bookRepository->findAll();
+        $booksFound = [];
+
+        $length = count($books);
+
+        for($i=0; $i < $length ; $i++){
+            $title = $books[$i]->getTitle();
+            $result = stristr($title, $search);
+            if($result == true){
+                $booksFound[] = $books[$i];
+
+            }
+
+        }
+
+        if($booksFound == null){
+            $booksFound[] = [
+                 'title' => 'Aucun article contenant ce mot clé dans un titre n\'a été trouvé.'
+            ];
+            
+        }
+
+
+        return $this->render('security/results.html.twig', [
+            'booksFound' => $booksFound,
+            'formSearch' => $searchForm->createView()
+        ]);
 
     }
 }

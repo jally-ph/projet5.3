@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h1>Results</h1>
+
+{% for booksFound in booksFound %}
+    
+    <p>{{ booksFound.title }} </p>
+    
+{% endfor %}
+
+
+{% endblock %}

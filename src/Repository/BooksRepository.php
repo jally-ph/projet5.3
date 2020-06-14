@@ -39,24 +39,20 @@ class BooksRepository extends ServiceEntityRepository
     //     ;
     // }
 
-    public function findzzzByTitle($search)
-    {
-        return $this->createQueryBuilder(
-            'SELECT title
-            FROM App\Entity\Books title
-            WHERE title
-            LIKE % keyword %'
-        )
-            ->setParameter('keyword', '%'.$search.'%')
-            ->getQuery()
-            ->getResult()
-        ;
-    }
+    // public function findAllTitle()
+    // {
+    //     return $this->createQueryBuilder('a')
+    //          ->andWhere('a.title = :')
+    //          ->setParameter('motcle', '%'.$motcle.'%')
+    //          ->getQuery()
+    //          ->getResult()
+    //      ;
+    // }
 
-    public function findByTitle($keyword){
+    public function findByTitle($title){
         $query = $this->createQueryBuilder('a')
-            ->where('a.title LIKE :key')->orWhere('a.title LIKE :key')
-            ->setParameter('key' , '%'.$keyword.'%')->getQuery();
+            ->where('a.title LIKE :title')->orWhere('a.title LIKE :title')
+            ->setParameter('title' , '%'.$title.'%')->getQuery();
  
         return $query->getResult();
     }
