@@ -14,7 +14,7 @@
                 <h2>{{ book.title }}</h2>
                 <div>{{ book.content | raw }}</div>
                 <p>publié le {{ book.date | date('d/m/Y') }} à {{ book.date | date('H:i') }}</p>
-                <a href="{{ path('app_show', {'id': book.id }) }}">Lire la suite</a>
+                <a href="{{ path('book_show', {'id': book.id }) }}">Lire la suite</a>
             </article>
         {% endfor %}
     

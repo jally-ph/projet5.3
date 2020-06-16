@@ -211,7 +211,7 @@ class AppController extends AbstractController
             $manager->persist($book);
             $manager->flush();
 
-            return $this->redirectToRoute('app_show', ['id' => $book->getId()]);
+            return $this->redirectToRoute('book_show', ['id' => $book->getId()]);
         }
 
         return $this->render('app/newBook.html.twig', [
@@ -266,7 +266,7 @@ class AppController extends AbstractController
             $manager->persist($chapter);
             $manager->flush();
 
-            return $this->redirectToRoute('app_show', ['id' => $book->getId()]);
+            return $this->redirectToRoute('book_show', ['id' => $book->getId()]);
         }
         return $this->render('app/newChapter.html.twig', [
             'formNewChapter' => $form->createView(),
@@ -278,7 +278,7 @@ class AppController extends AbstractController
 
 
     /**
-     * @Route("/app/{id}", name="app_show")
+     * @Route("/app/{id}", name="book_show")
      */
     public function showBook($id, Books $book, Request $request)
     {
@@ -435,7 +435,7 @@ class AppController extends AbstractController
             $manager->persist($chapter);
             $manager->flush();
 
-            return $this->redirectToRoute('app_show', ['id' => $bookId]);
+            return $this->redirectToRoute('book_show', ['id' => $bookId]);
         }
         return $this->render('app/newChapter.html.twig', [
             'formNewChapter' => $form->createView(),
@@ -486,7 +486,7 @@ class AppController extends AbstractController
             $manager->flush();
 
             
-            return $this->redirectToRoute('app_show', ['id' => $bookId]);
+            return $this->redirectToRoute('book_show', ['id' => $bookId]);
         }
 
         return $this->render('app/newBook.html.twig', [
@@ -522,7 +522,7 @@ class AppController extends AbstractController
         $manager->flush();
 
         $bookId = $chapter->getBooks()->getId();
-        return $this->redirectToRoute('app_show', ['id' => $bookId]);
+        return $this->redirectToRoute('book_show', ['id' => $bookId]);
         
     }
 

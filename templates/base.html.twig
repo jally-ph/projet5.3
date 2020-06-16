@@ -42,12 +42,12 @@
                         </li>
                     {% endif %}
                 </ul>
-                {% form_theme formSearch 'bootstrap_4_layout.html.twig' %}
-                {{ form_start(formSearch) }}
-                {{ form_widget(formSearch.search) }}
-                <button id="search_submit" type="submit" ><i class="fas fa-search"></i> <span>Rechercher</span></button>
-                {{ form_end(formSearch) }}  
-                {# {% include('app/formSearch.html.twig') %} #}
+                <div class="">
+                    {{ form_start(formSearch) }}
+                    {{ form_widget(formSearch.search) }}
+                    <button class="btn btn-dark" id="search_submit" type="submit" ><span>Rechercher</span></button>
+                    {{ form_end(formSearch) }}  
+                </div>
             </div>
         </nav>
         <div class="container">

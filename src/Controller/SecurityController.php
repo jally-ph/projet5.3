@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\Books;
+use App\Entity\Chapter;
 use App\Form\SearchType;
 use App\Form\RegistrationType;
 use Symfony\Component\Form\FormView;
@@ -97,32 +98,67 @@ class SecurityController extends AbstractController
             }
         }
         
+        //pour les titres de livres
         $bookRepository = $this->getDoctrine()->getRepository(Books::class);
         $books = $bookRepository->findAll();
+        $bookslength = count($books);
         $booksFound = [];
 
-        $length = count($books);
-
-        for($i=0; $i < $length ; $i++){
+        for($i=0; $i < $bookslength ; $i++){
             $title = $books[$i]->getTitle();
             $result = stristr($title, $search);
             if($result == true){
                 $booksFound[] = $books[$i];
-
             }
 
         }
 
         if($booksFound == null){
-            $booksFound[] = [
-                 'title' => 'Aucun article contenant ce mot clé dans un titre n\'a été trouvé.'
-            ];
-            
+            $booksFound = '';   
+        }
+
+        //pour les titres de chapitre
+        $chapterRepository = $this->getDoctrine()->getRepository(Chapter::class);
+        $chapters = $chapterRepository->findAll();
+        $chapterslength = count($chapters);
+        $chaptersFound = [];
+
+        for($i=0; $i < $chapterslength ; $i++){
+            $title = $chapters[$i]->getTitle();
+            $result = stristr($title, $search);
+            if($result == true){
+                $chaptersFound[] = $chapters[$i];
+            }
+        }
+
+        if($chaptersFound == null){
+            $chaptersFound = '';   
+        }
+
+
+        //pour les utilisateurs
+        $userRepository = $this->getDoctrine()->getRepository(User::class);
+        $users = $userRepository->findAll();
+        $userslength = count($users);
+        $usersFound = [];
+
+        for($i=0; $i < $userslength ; $i++){
+            $username = $users[$i]->getUsername();
+            $result = stristr($username, $search);
+            if($result == true){
+                $usersFound[] = $users[$i];
+            }
+        }
+
+        if($users == null){
+            $usersFound = '';   
         }
 
 
         return $this->render('security/results.html.twig', [
             'booksFound' => $booksFound,
+            'chaptersFound' => $chaptersFound,
+            'usersFound' => $usersFound,
             'formSearch' => $searchForm->createView()
         ]);
 

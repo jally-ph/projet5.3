@@ -29,26 +29,6 @@ class BooksRepository extends ServiceEntityRepository
         ;
     }
 
-    // public function findByTitle($motcle)
-    // {
-    //     return $this->createQueryBuilder('a')
-    //         ->andWhere('a.title LIKE :motcle')
-    //         ->setParameter('motcle', '%'.$motcle.'%')
-    //         ->getQuery()
-    //         ->getResult()
-    //     ;
-    // }
-
-    // public function findAllTitle()
-    // {
-    //     return $this->createQueryBuilder('a')
-    //          ->andWhere('a.title = :')
-    //          ->setParameter('motcle', '%'.$motcle.'%')
-    //          ->getQuery()
-    //          ->getResult()
-    //      ;
-    // }
-
     public function findByTitle($title){
         $query = $this->createQueryBuilder('a')
             ->where('a.title LIKE :title')->orWhere('a.title LIKE :title')
