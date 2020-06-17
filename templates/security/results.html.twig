@@ -6,14 +6,14 @@
     
     {# collapse bootstrap #}
     <p>
-    <a class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Livres</a>
+    <a class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="true" aria-controls="multiCollapseExample1">Livres</a>
     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">Chapitres</button>
     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multiCollapseExample3" aria-expanded="false" aria-controls="multiCollapseExample3">Utilisateurs</button>
 
     {# <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Toggle both elements</button> #}
     </p>
 
-        <div class="collapse multi-collapse" id="multiCollapseExample1">
+        <div class="collapse show multi-collapse" id="multiCollapseExample1">
         <div class="card card-body">
 
             <h3>{{ booksFound | length }} livres </h3>
