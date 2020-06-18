@@ -14,6 +14,13 @@ consectetur est quia repellendus exercitationem commodi aliquam totam aspernatur
 perferendis ipsa aliquid hic rerum alias distinctio quae quibusdam ab qui nemo odio. 
 Doloribus perferendis nobis ea repudiandae laudantium! Dolor.</p>
 
+    <div>
+        <h2>Mes créations :</h2>
+        {% for book in books %}
+            <p><a href="{{ path('book_show', {'id': book.id }) }}">{{ book.title }}</a></p>
+        {% endfor %}
+    </div>
+
 <span>by Jally </span>
 
 

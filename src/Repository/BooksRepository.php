@@ -29,12 +29,14 @@ class BooksRepository extends ServiceEntityRepository
         ;
     }
 
-    public function findByTitle($title){
-        $query = $this->createQueryBuilder('a')
-            ->where('a.title LIKE :title')->orWhere('a.title LIKE :title')
-            ->setParameter('title' , '%'.$title.'%')->getQuery();
- 
-        return $query->getResult();
+    public function findByAuthor($author)
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.books = :author')
+            ->setParameter('author', $author)
+            ->getQuery()
+            ->getResult()
+        ;
     }
 
     // /**

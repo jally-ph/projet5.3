@@ -13,7 +13,7 @@
         
         {# navbar #}
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="{{ path('home') }}">Writing Pros</a>
+            <a class="navbar-brand" href="{{ path('app') }}">Writing Pros</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -29,6 +29,9 @@
                     {% if app.user %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('new_book') }}">Create a book</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('home', {'username': user.username }) }}">Espace perso</a>
                     </li>
                     {% endif %}
 

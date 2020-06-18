@@ -60,7 +60,7 @@ class AppController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function home(Request $request)
+    public function home(UserInterface $user, Request $request)
     {
         //barre de recherche
         $searchForm = $this->createForm(SearchType::class, null);
@@ -75,9 +75,33 @@ class AppController extends AbstractController
             }
         }
 
+        // affiche livres de l'auteur
+        $author = $user->getUsername();
+        $books = $this->getDoctrine()
+                        ->getRepository(Books::class)
+                        ->findByAuthor($author);
+
+        
+
+
+        // $bookslength = count($books);
+        // $booksFound = [];
+
+        // for($i=0; $i < $bookslength ; $i++){
+        //     $author = $books[$i]->getAuthor();
+        //     $result = stristr($title, $search);
+        //     if($result == true){
+        //         $booksFound[] = $books[$i];
+        //     }
+
+        // }
+
+
         return $this->render('app/home.html.twig', [
             'subtitle' => "Bienvenu sur mon site",
-            'formSearch' => $searchForm->createView()
+            'formSearch' => $searchForm->createView(),
+            'user' => $user,
+            'books' => $books
         ]);
 
     }
