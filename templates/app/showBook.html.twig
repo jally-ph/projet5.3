@@ -6,7 +6,7 @@
         <h2>{{ book.title | escape }}</h2>
         <span class="badge badge-pill badge-dark">{{ book.category }}</span>
         <div class="metadata">écrit le {{ book.date | date('d/m/Y') }} à {{ book.date | date('H:i') }}
-        par {{ book.author }}</div>
+        par {{ book.author | escape }}</div>
         {% if app.user %}
             {% if app.user.username is same as(book.author) %}
                 
@@ -29,7 +29,7 @@
                     </div>
                     <div class="modal-body">
                         Voulez-vous vraiment supprimer ce livre ? <br>
-                        <span class="badge badge-pill badge-dark"> {{ book.title }} </span>
+                        <span class="badge badge-pill badge-dark"> {{ book.title | escape }} </span>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>

@@ -56,7 +56,7 @@
 
         {% for comment in comments %}
             <div class="comment">
-            <span class="badge badge-pill badge-dark">{{ comment.author }}</span>
+            <span class="badge badge-pill badge-dark">{{ comment.author | escape }}</span>
             <span class="badge badge-pill badge-light">{{ comment.createdAt | date('d/m/Y à H:i')}}</span>
             <p>{{ comment.content | escape }}</p>
             {% if app.user %}
