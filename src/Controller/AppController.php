@@ -92,27 +92,7 @@ class AppController extends AbstractController
 
     }
 
-    // /**
-    //  * @Route("/search/{search}", name="search")
-    //  */
-    // public function search($search, Request $request)
-    // {
-    //     $searchForm = $this->createForm(SearchType::class, null);
 
-    //     if($request->isMethod("POST")){
-    //         $searchForm->handleRequest($request);
-
-    //         if($searchForm->isSubmitted() && $searchForm->isValid()){
-    //             return $this->redirectToRoute("search", [
-    //                 'search' => $searchForm["search"]->getData()
-    //             ]);
-    //         }
-    //     }
-        
-
-    // }
-
-    
     /**
      * @Route("/categories", name="categories")
      */
