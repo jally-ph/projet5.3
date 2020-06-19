@@ -57,7 +57,9 @@
             </div>
         </nav>
         <div class="container">
-            {% block body %}{% endblock %}
+            {% autoescape 'html' %}
+                {% block body %}{% endblock %}
+            {% endautoescape %}
         </div>
         
         {% block javascripts %}

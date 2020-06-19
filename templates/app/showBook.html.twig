@@ -3,10 +3,10 @@
 {% block body %}
     <article>
 
-        <h2>{{ book.title | escape }}</h2>
+        <h2>{{ book.title }}</h2>
         <span class="badge badge-pill badge-dark">{{ book.category }}</span>
         <div class="metadata">écrit le {{ book.date | date('d/m/Y') }} à {{ book.date | date('H:i') }}
-        par {{ book.author | escape }}</div>
+        par {{ book.author }}</div>
         {% if app.user %}
             {% if app.user.username is same as(book.author) %}
                 
@@ -42,7 +42,7 @@
         {% endif %}
         
         <hr>
-        <div>{{ book.content | escape }}</div>
+        <div>{{ book.content }}</div>
     </article>
     <hr>
     <section id="chapters">

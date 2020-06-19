@@ -7,8 +7,8 @@
 
     {% for book in books %}
         <article>
-            <h2>{{ book.title | escape }}</h2>
-            <div>{{ book.content | escape }}</div>
+            <h2>{{ book.title }}</h2>
+            <div>{{ book.content }}</div>
             <p>publié le {{ book.date | date('d/m/Y') }} à {{ book.date | date('H:i') }}</p>
             <a href="{{ path('book_show', {'id': book.id }) }}">Lire la suite</a>
         </article>
