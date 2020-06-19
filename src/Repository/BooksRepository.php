@@ -39,6 +39,16 @@ class BooksRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findByPublic($public)
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.books = :public')
+            ->setParameter('public', $public)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return Books[] Returns an array of Books objects
     //  */

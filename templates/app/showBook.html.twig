@@ -3,7 +3,7 @@
 {% block body %}
     <article>
 
-        <h2>{{ book.title }}</h2>
+        <h2>{{ book.title | escape }}</h2>
         <span class="badge badge-pill badge-dark">{{ book.category }}</span>
         <div class="metadata">écrit le {{ book.date | date('d/m/Y') }} à {{ book.date | date('H:i') }}
         par {{ book.author }}</div>
@@ -42,7 +42,7 @@
         {% endif %}
         
         <hr>
-        <div>{{ book.content | raw }}</div>
+        <div>{{ book.content | escape }}</div>
     </article>
     <hr>
     <section id="chapters">

@@ -3,7 +3,7 @@
 
 {% block body %}
     <article>
-        <h2>{{ chapter.title }}</h2>
+        <h2>{{ chapter.title | escape }}</h2>
         <a class="btn btn-outline-secondary" href="{{ path('edit_chapter', {'id': chapter.id }) }}" role="button">Modifier le chapitre</a>
 
         {#<!-- Button trigger modal -->#}
@@ -35,7 +35,7 @@
 
         <div class="metadata">écrit le {{ chapter.publishedDate | date('d/m/Y') }} à {{ chapter.publishedDate | date('H:i') }}</div>
         <hr>
-        <div>{{ chapter.content | raw }}</div>
+        <div>{{ chapter.content | escape }}</div>
     </article>
     <hr>
 
@@ -58,14 +58,14 @@
             <div class="comment">
             <span class="badge badge-pill badge-dark">{{ comment.author }}</span>
             <span class="badge badge-pill badge-light">{{ comment.createdAt | date('d/m/Y à H:i')}}</span>
-            <p>{{ comment.content | raw }}</p>
+            <p>{{ comment.content | escape }}</p>
             {% if app.user %}
                 {% if app.user.username is same as(comment.author) %}
                     <a class="btn btn-outline-secondary" href="{{ path('edit_comment', {'id': comment.id }) }}" role="button">Modifier le commentaire</a>
 
                     {#<!-- Button trigger modal -->#}
                     <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal2-{{ comment.id }}">
-                    Supprimer {{ comment.id }}
+                    Supprimer
                     </button>
 
                     {#<!-- Modal -->#}
@@ -81,7 +81,7 @@
                         <div class="modal-body">
                             Voulez-vous vraiment supprimer ce commentaire ?
                             <br><br>
-                            <p>" {{ comment.content | raw }} "</p>
+                            <p>" {{ comment.content | escape }} "</p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>

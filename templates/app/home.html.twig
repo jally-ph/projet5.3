@@ -1,27 +1,15 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<h1>Hey !</h1>
-<h2>{{ subtitle }}</h2>
 
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam aut, omnis, 
-consectetur est quia repellendus exercitationem commodi aliquam totam aspernatur, 
-perferendis ipsa aliquid hic rerum alias distinctio quae quibusdam ab qui nemo odio. 
-Doloribus perferendis nobis ea repudiandae laudantium! Dolor.</p>
-
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam aut, omnis, 
-consectetur est quia repellendus exercitationem commodi aliquam totam aspernatur, 
-perferendis ipsa aliquid hic rerum alias distinctio quae quibusdam ab qui nemo odio. 
-Doloribus perferendis nobis ea repudiandae laudantium! Dolor.</p>
+<h2>Bienvenu sur ta page perso {{user.username}} !</h2>
 
     <div>
-        <h2>Mes créations :</h2>
+        <h3>Tes créations :</h3>
         {% for book in books %}
             <p><a href="{{ path('book_show', {'id': book.id }) }}">{{ book.title }}</a></p>
         {% endfor %}
     </div>
-
-<span>by Jally </span>
 
 
 {% endblock %}

@@ -12,6 +12,7 @@ use Symfony\Component\Form\FormView;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -81,10 +82,11 @@ class SecurityController extends AbstractController
      */
     public function logout() {}
 
+
     /**
      * @Route("/search/{search}", name="search")
      */
-    public function search($search, Request $request)
+    public function search($search, Request $request, UserInterface $user = null)
     {
         $searchForm = $this->createForm(SearchType::class, null);
 
@@ -159,7 +161,8 @@ class SecurityController extends AbstractController
             'booksFound' => $booksFound,
             'chaptersFound' => $chaptersFound,
             'usersFound' => $usersFound,
-            'formSearch' => $searchForm->createView()
+            'formSearch' => $searchForm->createView(),
+            'user' => $user
         ]);
 
     }

@@ -25,7 +25,7 @@ class AppController extends AbstractController
     /**
      * @Route("/app", name="app")
      */
-    public function index(Request $request, PaginatorInterface $paginator, BooksRepository $repo)
+    public function index(Request $request, PaginatorInterface $paginator, BooksRepository $repo, UserInterface $user = null)
     {
         //barre de recherche
         $searchForm = $this->createForm(SearchType::class, null);
@@ -39,11 +39,13 @@ class AppController extends AbstractController
                 ]);
             }
         }
+        
+        $publicBooks = $this->getDoctrine()
+                        ->getRepository(Books::class)
+                        ->findByPublic('true');
 
-        $donnees = $repo->findAll();
-        // dd($book);
         $books = $paginator->paginate(
-            $donnees,
+            $publicBooks,
             $request->query->getInt('page', 1),
             5
         );
@@ -53,7 +55,8 @@ class AppController extends AbstractController
         return $this->render('app/index.html.twig', [
             'controller_name' => 'AppController',
             'books' => $books,
-            'formSearch' => $searchForm->createView()
+            'formSearch' => $searchForm->createView(),
+            'user' => $user
         ]);
     }
 
@@ -81,24 +84,7 @@ class AppController extends AbstractController
                         ->getRepository(Books::class)
                         ->findByAuthor($author);
 
-        
-
-
-        // $bookslength = count($books);
-        // $booksFound = [];
-
-        // for($i=0; $i < $bookslength ; $i++){
-        //     $author = $books[$i]->getAuthor();
-        //     $result = stristr($title, $search);
-        //     if($result == true){
-        //         $booksFound[] = $books[$i];
-        //     }
-
-        // }
-
-
         return $this->render('app/home.html.twig', [
-            'subtitle' => "Bienvenu sur mon site",
             'formSearch' => $searchForm->createView(),
             'user' => $user,
             'books' => $books
@@ -124,19 +110,13 @@ class AppController extends AbstractController
     //     }
         
 
-
-
-
-
-
-
     // }
 
     
     /**
      * @Route("/categories", name="categories")
      */
-    public function categoryPage(Request $request)
+    public function categoryPage(Request $request, UserInterface $user = null)
     {
         // barrre de recherche
         $searchForm = $this->createForm(SearchType::class, null);
@@ -152,14 +132,15 @@ class AppController extends AbstractController
         }
 
         return $this->render('app/categories.html.twig', [
-            'formSearch' => $searchForm->createView()
+            'formSearch' => $searchForm->createView(),
+            'user' => $user
         ]);
     }
 
     /**
      * @Route("/category/{category}", name="show_category")
      */
-    public function getCategory($category, Request $request)
+    public function getCategory($category, Request $request, UserInterface $user = null)
     {
         // barrre de recherche
         $searchForm = $this->createForm(SearchType::class, null);
@@ -180,7 +161,8 @@ class AppController extends AbstractController
         return $this->render('app/category.html.twig', [
             'books' => $books,
             'category' => $category,
-            'formSearch' => $searchForm->createView()
+            'formSearch' => $searchForm->createView(),
+            'user' => $user
         ]);
     }
 
@@ -242,14 +224,15 @@ class AppController extends AbstractController
             'formNewBook' => $form->createView(),
             'titlePage' => $book->getId() !== null,
             'editMode' => $book->getId() !== null,
-            'formSearch' => $searchForm->createView()
+            'formSearch' => $searchForm->createView(),
+            'user' => $user
         ]);
     }
 
     /**
      * @Route("/app/newchapter/{id}", name="new_chapter")
      */
-    public function newChapter($id, Chapter $chapter = null, Request $request, EntityManagerInterface $manager)
+    public function newChapter($id, Chapter $chapter = null, Request $request, EntityManagerInterface $manager, UserInterface $user)
     {
         // barrre de recherche
         $searchForm = $this->createForm(SearchType::class, null);
@@ -296,7 +279,8 @@ class AppController extends AbstractController
             'formNewChapter' => $form->createView(),
             'titlePage' => $chapter->getId() !== null,
             'editMode' => $chapter->getId() !== null,
-            'formSearch' => $searchForm->createView()
+            'formSearch' => $searchForm->createView(),
+            'user' => $user
         ]);
     }
 
@@ -304,7 +288,7 @@ class AppController extends AbstractController
     /**
      * @Route("/app/{id}", name="book_show")
      */
-    public function showBook($id, Books $book, Request $request)
+    public function showBook($id, Books $book, Request $request, UserInterface $user = null)
     {
         // barrre de recherche
         $searchForm = $this->createForm(SearchType::class, null);
@@ -327,7 +311,8 @@ class AppController extends AbstractController
         return $this->render('app/showBook.html.twig', [
             'book' => $book,
             'chapters' => $chapters,
-            'formSearch' => $searchForm->createView()
+            'formSearch' => $searchForm->createView(),
+            'user' => $user
         ]);
     }
 
@@ -374,7 +359,8 @@ class AppController extends AbstractController
             'chapter' => $chapter,
             'commentForm' => $form->createView(),
             'comments' => $comments,
-            'formSearch' => $searchForm->createView()
+            'formSearch' => $searchForm->createView(),
+            'user' => $user
         ]);
     }
 
@@ -382,7 +368,7 @@ class AppController extends AbstractController
     /**
       * @Route("/editcomment/{id}", name="edit_comment")
       */
-     public function editComment($id, Comment $comment, Request $request, EntityManagerInterface $manager)
+     public function editComment($id, Comment $comment, Request $request, EntityManagerInterface $manager, UserInterface $user)
      {
         // barrre de recherche
         $searchForm = $this->createForm(SearchType::class, null);
@@ -419,14 +405,15 @@ class AppController extends AbstractController
 
         return $this->render('app/formEditComment.html.twig', [
              'formEditComment' => $form->createView(),
-             'formSearch' => $searchForm->createView()
+             'formSearch' => $searchForm->createView(),
+             'user' => $user
          ]);
     }
 
     /**
      * @Route("/editchapter/{id}", name="edit_chapter")
      */
-    public function editChapter($id, Chapter $chapter, Request $request, EntityManagerInterface $manager)
+    public function editChapter($id, Chapter $chapter, Request $request, EntityManagerInterface $manager, UserInterface $user)
     {
         // barrre de recherche
         $searchForm = $this->createForm(SearchType::class, null);
@@ -465,7 +452,8 @@ class AppController extends AbstractController
             'formNewChapter' => $form->createView(),
             'titlePage' => $chapter->getId() !== null,
             'editMode' => $chapter->getId() !== null,
-            'formSearch' => $searchForm->createView()
+            'formSearch' => $searchForm->createView(),
+            'user' => $user
         ]);
     }
 
@@ -490,6 +478,16 @@ class AppController extends AbstractController
         $form = $this->createFormBuilder($book)
                     ->add('title')
                     ->add('content')
+                    ->add('category', ChoiceType::class, [
+                        'choices'  => [
+                            'littérature' => 'littérature',
+                            'fantastique' => 'fantastique',
+                            'romance' => 'romance',
+                            'poésie' => 'poésie',
+                            'policier' => 'policier',
+                            'essai' => 'essai'
+                        ],
+                    ])
                     ->add('public')
                     ->add('completed')
                     ->getForm();
@@ -517,7 +515,8 @@ class AppController extends AbstractController
             'formNewBook' => $form->createView(),
             'titlePage' => $book->getId() !== null,
             'editMode' => $book->getId() !== null,
-            'formSearch' => $searchForm->createView()
+            'formSearch' => $searchForm->createView(),
+            'user' => $user
         ]);
     }
 
