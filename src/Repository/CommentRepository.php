@@ -31,6 +31,17 @@ class CommentRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findByAuthor($author)
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.author = :author')
+            ->setParameter('author', $author)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+
 
 
 

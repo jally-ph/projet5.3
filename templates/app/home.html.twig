@@ -6,9 +6,34 @@
 
     <div>
         <h3>Tes créations :</h3>
-        {% for book in books %}
-            <p><a href="{{ path('book_show', {'id': book.id }) }}">{{ book.title }}</a></p>
-        {% endfor %}
+        {% if books %}
+            {% for book in books %}
+                <p><a href="{{ path('book_show', {'id': book.id }) }}">{{ book.title }}</a></p>
+            {% endfor %}
+        {% else %}
+            OMG ! Tu n'as pas encore écrit de livres !
+        {% endif %}
+    </div>
+
+    <div>
+        <h4>Vous aimez commenté :</h4>
+        {% if comments %}
+            {% for comment in comments %}
+                <p>" {{ comment.content }} "</p>
+                <p>au 
+                    <a href="{{ path('chapter_show', {'id': comment.chapter.id }) }}">
+                    {{ comment.chapter.title }} 
+                    </a> 
+                    dans le livre 
+                    <a href="{{ path('book_show', {'id': comment.chapter.books.id }) }}">
+                    {{ comment.chapter.books.title }} 
+                    </a>
+                </p>
+                <p>le {{ comment.createdAt | date('d/m/Y') }} à {{ comment.createdAt | date('H:i') }}</p>
+            {% endfor %}
+        {% else %}
+            Tu n'as écrit aucun commentaire pour l'instant
+        {% endif %}
     </div>
 
 

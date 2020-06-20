@@ -84,10 +84,16 @@ class AppController extends AbstractController
                         ->getRepository(Books::class)
                         ->findByAuthor($author);
 
+        // affiche historique comments de l'auteur
+        $comments = $this->getDoctrine()
+                        ->getRepository(Comment::class)
+                        ->findByAuthor($author);
+
         return $this->render('app/home.html.twig', [
             'formSearch' => $searchForm->createView(),
             'user' => $user,
-            'books' => $books
+            'books' => $books,
+            'comments' => $comments
         ]);
 
     }

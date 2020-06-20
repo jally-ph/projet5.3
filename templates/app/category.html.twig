@@ -12,7 +12,7 @@
             <article>
                 <img src="http://placehold.it/150x150" alt="cover">
                 <h2>{{ book.title }}</h2>
-                <div>{{ book.content | raw }}</div>
+                <div>{{ book.content }}</div>
                 <p>publié le {{ book.date | date('d/m/Y') }} à {{ book.date | date('H:i') }}</p>
                 <a href="{{ path('book_show', {'id': book.id }) }}">Lire la suite</a>
             </article>
