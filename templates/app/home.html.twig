@@ -9,6 +9,21 @@
         {% if books %}
             {% for book in books %}
                 <p><a href="{{ path('book_show', {'id': book.id }) }}">{{ book.title }}</a></p>
+                <div class="publicOrNotEspacePerso">
+                    {% if book.public == 1 %}
+                    <i class="fas fa-eye" title="votre texte est visible"></i>
+                    {% else %}
+                    <i class="fas fa-eye-slash" title="votre texte est privé"></i>
+                    {% endif %}
+                </div>
+                <div class="completedOrNotEspacePerso">
+                    {% if book.completed == 1 %}
+                    <i class="fas fa-book" title="votre texte est complet"></i>
+                    {% else %}
+                    <i class="fas fa-book-open" title="votre texte n'est pas complet"></i>
+                    {% endif %}
+                </div>
+                
             {% endfor %}
         {% else %}
             OMG ! Tu n'as pas encore écrit de livres !

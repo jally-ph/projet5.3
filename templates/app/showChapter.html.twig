@@ -4,6 +4,22 @@
 {% block body %}
     <article>
         <h2>{{ chapter.title }}</h2>
+
+        <div class="publicOrNotShowChapter">
+            {% if chapter.public == 1 %}
+            <i class="fas fa-eye" title="votre texte est visible"></i>
+            {% else %}
+            <i class="fas fa-eye-slash" title="votre texte est privé"></i>
+            {% endif %}
+        </div>
+        <div class="completedOrNotShowChapter">
+            {% if chapter.completed == 1 %}
+            <i class="fas fa-book" title="votre texte est complet"></i>
+            {% else %}
+            <i class="fas fa-book-open" title="votre texte n'est pas complet"></i>
+            {% endif %}
+        </div>
+
         <a class="btn btn-outline-secondary" href="{{ path('edit_chapter', {'id': chapter.id }) }}" role="button">Modifier le chapitre</a>
 
         {#<!-- Button trigger modal -->#}

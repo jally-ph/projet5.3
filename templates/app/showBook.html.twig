@@ -5,6 +5,23 @@
 
         <h2>{{ book.title }}</h2>
         <span class="badge badge-pill badge-dark">{{ book.category }}</span>
+
+        <div class="publicOrNotShowBook1">
+            {% if book.public == 1 %}
+            <i class="fas fa-eye" title="votre texte est visible"></i>
+            {% else %}
+            <i class="fas fa-eye-slash" title="votre texte est privé"></i>
+            {% endif %}
+        </div>
+        <div class="completedOrNotShowBook1">
+            {% if book.completed == 1 %}
+            <i class="fas fa-book" title="votre texte est complet"></i>
+            {% else %}
+            <i class="fas fa-book-open" title="votre texte n'est pas complet"></i>
+            {% endif %}
+        </div>
+
+        
         <div class="metadata">écrit le {{ book.date | date('d/m/Y') }} à {{ book.date | date('H:i') }}
         par {{ book.author }}</div>
         {% if app.user %}
@@ -56,6 +73,21 @@
         <div>
         {% for chapter in chapters %}
             <p><a href="{{ path('chapter_show', {'id': chapter.id }) }}">{{ chapter.title }}</a></p>
+
+            <div class="publicOrNotShowBook2">
+                {% if chapter.public == 1 %}
+                <i class="fas fa-eye" title="votre texte est visible"></i>
+                {% else %}
+                <i class="fas fa-eye-slash" title="votre texte est privé"></i>
+                {% endif %}
+            </div>
+            <div class="completedOrNotShowBook2">
+                {% if chapter.completed == 1 %}
+                <i class="fas fa-book" title="votre texte est complet"></i>
+                {% else %}
+                <i class="fas fa-book-open" title="votre texte n'est pas complet"></i>
+                {% endif %}
+            </div>
         {% endfor %}
         </div>
     </section>

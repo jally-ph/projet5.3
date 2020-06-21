@@ -38,6 +38,11 @@ class Comment
      */
     private $chapter;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Like::class, mappedBy="comment")
+     */
+    private $likes;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -87,6 +92,37 @@ class Comment
     public function setChapter(?Chapter $chapter): self
     {
         $this->chapter = $chapter;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Like[]
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(Like $like): self
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes[] = $like;
+            $like->setComment($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(Like $like): self
+    {
+        if ($this->likes->contains($like)) {
+            $this->likes->removeElement($like);
+            // set the owning side to null (unless already changed)
+            if ($like->getComment() === $this) {
+                $like->setComment(null);
+            }
+        }
 
         return $this;
     }

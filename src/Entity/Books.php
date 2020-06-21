@@ -76,12 +76,18 @@ class Books
      */
     private $category;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Like::class, mappedBy="book", orphanRemoval=true)
+     */
+    private $likes;
+
    
 
 
     public function __construct()
     {
         $this->chapters = new ArrayCollection();
+        $this->likes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -200,6 +206,37 @@ class Books
     public function setCategory(string $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Like[]
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(Like $like): self
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes[] = $like;
+            $like->setBook($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(Like $like): self
+    {
+        if ($this->likes->contains($like)) {
+            $this->likes->removeElement($like);
+            // set the owning side to null (unless already changed)
+            if ($like->getBook() === $this) {
+                $like->setBook(null);
+            }
+        }
 
         return $this;
     }
