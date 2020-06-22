@@ -35,10 +35,7 @@ class AppFixtures extends Fixture
             $book = new Books();
 
             $content = join($faker->paragraphs(5), '');
-            
-            // $status_1 = true;
-            // $status_2 = false;
-            
+ 
             $categories = [
             'littérature',
             'fantastique',

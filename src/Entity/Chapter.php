@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\ChapterRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\PersistentCollection;
+use App\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ChapterRepository;
+use Doctrine\ORM\PersistentCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass=ChapterRepository::class)
@@ -210,5 +211,17 @@ class Chapter
         }
 
         return $this;
+    }
+
+    /*
+    * savoir si le chap est liké par cet user
+    */
+    public function isLikedByUser(User $user) : bool {
+        
+        foreach($this->likes as $like){
+            if ($like->getUser() === $user) return true;
+        }
+
+        return false;
     }
 }

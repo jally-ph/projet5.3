@@ -2,17 +2,20 @@
 
 namespace App\Controller;
 
+use App\Entity\Like;
 use App\Entity\User;
 use App\Entity\Books;
 use App\Entity\Chapter;
 use App\Entity\Comment;
 use App\Form\SearchType;
 use App\Form\CommentType;
+use App\Repository\LikeRepository;
 use App\Repository\BooksRepository;
 use Doctrine\ORM\PersistentCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -293,6 +296,7 @@ class AppController extends AbstractController
         $book = $booksRepository->find($id);
         $chapterRepository = $this->getDoctrine()->getRepository(Chapter::class);
         $chapters = $chapterRepository->findAllByBook($book->getId());
+        
 
         return $this->render('app/showBook.html.twig', [
             'book' => $book,
@@ -553,6 +557,93 @@ class AppController extends AbstractController
         return $this->redirectToRoute('app');
 
     }
+
+    /**
+     * Permet de liker un chapter
+     * @Route("/chapterliked/{id}", name="like_chapter")
+     */
+    public function likeChapter(Chapter $chapter, EntityManagerInterface $manager, LikeRepository $likerepo) : Response
+    {
+        $user = $this->getUser();
+
+        if(!$user) return $this->json([
+            'code' => 403,
+            'message' => 'unauthorized'
+        ], 403);
+
+        if ($chapter->isLikedByUser($user)){
+            $like = $likerepo->findOneBy([
+                'chapter' => $chapter,
+                'user' => $user
+            ]);
+
+            $manager->remove($like);
+            $manager->flush();
+
+            return $this->json([
+                'code' => 200,
+                'message' => 'like bien supprimé',
+                'likes' => $likerepo->count(['chapter' => $chapter])
+            ], 200);
+        }
+
+        $like = new Like();
+        $like->setChapter($chapter)
+                ->setCreatedAt(new \DateTime())
+                ->setUser($user);
+
+        $manager->persist($like);
+        $manager->flush();
+
+        return $this->json(['code' => 200, 
+        'Message' => 'like ajouté', 
+        'likes' => $likerepo->count(['chapter' => $chapter])], 200);
+
+    }
+
+    /**
+     * Permet de liker un comment
+     * @Route("/commentliked/{id}", name="like_comment")
+     */
+    public function likeComment(Comment $comment, EntityManagerInterface $manager, LikeRepository $likerepo) : Response
+    {
+        $user = $this->getUser();
+
+        if(!$user) return $this->json([
+            'code' => 403,
+            'message' => 'unauthorized'
+        ], 403);
+
+        if ($comment->isLikedByUser($user)){
+            $like = $likerepo->findOneBy([
+                'comment' => $comment,
+                'user' => $user
+            ]);
+
+            $manager->remove($like);
+            $manager->flush();
+
+            return $this->json([
+                'code' => 200,
+                'message' => 'like bien supprimé',
+                'likes' => $likerepo->count(['comment' => $comment])
+            ], 200);
+        }
+
+        $like = new Like();
+        $like->setComment($comment)
+                ->setCreatedAt(new \DateTime())
+                ->setUser($user);
+
+        $manager->persist($like);
+        $manager->flush();
+
+        return $this->json(['code' => 200, 
+        'Message' => 'like ajouté', 
+        'likes' => $likerepo->count(['comment' => $comment])], 200);
+
+    }
+
 
     
 

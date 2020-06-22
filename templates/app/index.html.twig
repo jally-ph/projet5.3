@@ -10,7 +10,9 @@
             <h2>{{ book.title }}</h2>
             <div>{{ book.content }}</div>
             <p>publié le {{ book.date | date('d/m/Y') }} à {{ book.date | date('H:i') }}</p>
+            <span class="">{{ book.chapters | length }} chapitres</span>
             <a href="{{ path('book_show', {'id': book.id }) }}">Lire la suite</a>
+            
         </article>
     {% endfor %}
 
