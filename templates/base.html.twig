@@ -5,11 +5,14 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}
         
-        {# bootswatch #}
-        <link rel="stylesheet" href="https://bootswatch.com/4/litera/bootstrap.min.css">
-        {# fontawesome #}
-        <script src="https://kit.fontawesome.com/7e70710549.js" crossorigin="anonymous"></script>
+            {# bootswatch #}
+            <link rel="stylesheet" href="https://bootswatch.com/4/litera/bootstrap.min.css">
+            {# fontawesome #}
+            <script src="https://kit.fontawesome.com/7e70710549.js" crossorigin="anonymous"></script>
+            {# style css #}
+            <link rel="stylesheet" href="../public/css/style.css">
         {% endblock %}
+        
     </head>
     <body>
         
@@ -30,7 +33,7 @@
                     </li>
                     {% if app.user %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('new_book') }}">Create a book</a>
+                        <a class="nav-link" href="{{ path('new_book') }}">Créer un nouveau livre</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('home', {'username': app.user.username }) }}">Espace perso</a>
@@ -51,9 +54,9 @@
                     {% endif %}
                 </ul>
                 <div class="">
-                    {{ form_start(formSearch) }}
-                    {{ form_widget(formSearch.search) }}
-                    <button class="btn btn-dark" id="search_submit" type="submit" ><span>Rechercher</span></button>
+                    {{ form_start(formSearch, { 'attr': {'class': 'formSearch'} }) }}
+                    {{ form_widget(formSearch.search, { 'attr': {'placeholder': 'rechercher'} }) }}
+                    <button class="btn btn-dark" id="search_submit" type="submit" ><i class="fas fa-search"></i></button>
                     {{ form_end(formSearch) }}  
                 </div>
             </div>
@@ -70,7 +73,7 @@
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 
             <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-            <script src="../../public/js/likes.js"></script>
+            <script src="../public/js/likes.js"></script>
 
         {% endblock %}
     </body>

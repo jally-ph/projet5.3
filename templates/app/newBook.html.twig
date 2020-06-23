@@ -1,4 +1,6 @@
 {% extends 'base.html.twig' %}
+
+
 {% form_theme formNewBook 'bootstrap_4_layout.html.twig' %}
 
 {% block body %}
@@ -16,13 +18,13 @@
     {{ form_start(formNewBook) }}
 
     {{ form_row(formNewBook.title) }}
-    {{ form_row(formNewBook.content) }}
+    {{ form_row(formNewBook.content, { 'attr': {'class': 'formNewBookContent'} }) }}
     {{ form_row(formNewBook.category) }}
     {{ form_row(formNewBook.completed) }}
     {{ form_row(formNewBook.public) }}
     
 
-    <button type="submit" class="btn btn-success">
+    <button type="submit" class="btn btn-dark">
         {% if editMode %}
             Modifier les détails du livre
         {% else %}

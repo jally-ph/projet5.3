@@ -111,7 +111,8 @@ class SecurityController extends AbstractController
         for($i=0; $i < $bookslength ; $i++){
             $title = $books[$i]->getTitle();
             $result = stristr($title, $search);
-            if($result == true){
+            $publicOrNot = $books[$i]->getPublic();
+            if($result == true && $publicOrNot == true){
                 $booksFound[] = $books[$i];
             }
 
@@ -130,7 +131,8 @@ class SecurityController extends AbstractController
         for($i=0; $i < $chapterslength ; $i++){
             $title = $chapters[$i]->getTitle();
             $result = stristr($title, $search);
-            if($result == true){
+            $publicOrNot = $chapters[$i]->getPublic();
+            if($result == true && $publicOrNot == true){
                 $chaptersFound[] = $chapters[$i];
             }
         }
