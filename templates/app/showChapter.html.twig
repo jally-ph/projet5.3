@@ -20,10 +20,16 @@
             {% endif %}
         </div>
 
-        <a href="#" class="btn btn-link js-like">
-            <i class="far fa-star"></i>
-            <span class="js-likes">{{ chapter.likes | length }}</span>
-        </a>
+        <div class="likeLink">
+            <a href="{{ path('like_chapter', {'id': chapter.id })}}" class="btn btn-link js-like">
+                {% if app.user and chapter.isLikedByUser(app.user) %}
+                    <i class="fas fa-star"></i>
+                {% else %}
+                    <i class="far fa-star"></i>
+                {% endif %}
+                <span class="js-likes">{{ chapter.likes | length }}</span>
+            </a>
+        </div>
 
         <a class="btn btn-outline-secondary" href="{{ path('edit_chapter', {'id': chapter.id }) }}" role="button">Modifier le chapitre</a>
 
@@ -61,7 +67,7 @@
     <hr>
 
     <section id="commentaires">
-        <h3>{{ chapter.comments | length }} Commentaires :</h3>
+        <h3>{{ comments | length }} Commentaires :</h3>
         
         {% if app.user %}
         <p class="">{{ app.user.username }} vous souhaitez laisser un petit commentaire gentil à l'auteur ?</p>
@@ -78,17 +84,8 @@
             <div class="comment">
             <span class="badge badge-pill badge-dark">{{ comment.author }}</span>
             <span class="badge badge-pill badge-light">{{ comment.createdAt | date('d/m/Y à H:i')}}</span>
-            <p>{{ comment.content | escape }}</p>
-            <div class="likeLink">
-                <a href="{{ path('like_comment', {'id': comment.id })}}" class="btn btn-link js-like">
-                    {% if app.user and comment.isLikedByUser(app.user) %}
-                        <i class="fas fa-star"></i>
-                    {% else %}
-                        <i class="far fa-star"></i>
-                    {% endif %}
-                    {# <span class="js-likes">{{ comment.likes | length }}</span> #}
-                </a>
-            </div>
+            <p>{{ comment.content }}</p>
+            
             {% if app.user %}
                 {% if app.user.username is same as(comment.author) %}
                     <a class="btn btn-outline-secondary" href="{{ path('edit_comment', {'id': comment.id }) }}" role="button">Modifier le commentaire</a>

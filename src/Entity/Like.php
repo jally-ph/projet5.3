@@ -18,11 +18,7 @@ class Like
      */
     private $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Books::class, inversedBy="likes")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $book;
+    
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="likes")
@@ -52,17 +48,6 @@ class Like
         return $this->id;
     }
 
-    public function getBook(): ?Books
-    {
-        return $this->book;
-    }
-
-    public function setBook(?Books $book): self
-    {
-        $this->book = $book;
-
-        return $this;
-    }
 
     public function getUser(): ?User
     {

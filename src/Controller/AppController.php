@@ -292,8 +292,8 @@ class AppController extends AbstractController
             }
         }
 
-        $booksRepository = $this->getDoctrine()->getRepository(Books::class);
-        $book = $booksRepository->find($id);
+        // $booksRepository = $this->getDoctrine()->getRepository(Books::class);
+        // $book = $booksRepository->find($id);
         $chapterRepository = $this->getDoctrine()->getRepository(Chapter::class);
         $chapters = $chapterRepository->findAllByBook($book->getId());
         
@@ -344,6 +344,7 @@ class AppController extends AbstractController
 
         $commentRepository = $this->getDoctrine()->getRepository(Comment::class);
         $comments = $commentRepository->findAllByChapter($chapter->getId());
+        // dd($chapter);
 
         return $this->render('app/showChapter.html.twig', [
             'chapter' => $chapter,
@@ -601,48 +602,7 @@ class AppController extends AbstractController
 
     }
 
-    /**
-     * Permet de liker un comment
-     * @Route("/commentliked/{id}", name="like_comment")
-     */
-    public function likeComment(Comment $comment, EntityManagerInterface $manager, LikeRepository $likerepo) : Response
-    {
-        $user = $this->getUser();
-
-        if(!$user) return $this->json([
-            'code' => 403,
-            'message' => 'unauthorized'
-        ], 403);
-
-        if ($comment->isLikedByUser($user)){
-            $like = $likerepo->findOneBy([
-                'comment' => $comment,
-                'user' => $user
-            ]);
-
-            $manager->remove($like);
-            $manager->flush();
-
-            return $this->json([
-                'code' => 200,
-                'message' => 'like bien supprimé',
-                'likes' => $likerepo->count(['comment' => $comment])
-            ], 200);
-        }
-
-        $like = new Like();
-        $like->setComment($comment)
-                ->setCreatedAt(new \DateTime())
-                ->setUser($user);
-
-        $manager->persist($like);
-        $manager->flush();
-
-        return $this->json(['code' => 200, 
-        'Message' => 'like ajouté', 
-        'likes' => $likerepo->count(['comment' => $comment])], 200);
-
-    }
+    
 
 
     

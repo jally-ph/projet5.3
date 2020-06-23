@@ -127,15 +127,5 @@ class Comment
         return $this;
     }
 
-    /*
-    * savoir si le comment est liké par cet user
-    */
-    public function isLikedByUser(User $user) : bool {
-        
-        foreach($this->likes as $like){
-            if ($like->getUser() === $user) return true;
-        }
-
-        return false;
-    }
+    
 }
