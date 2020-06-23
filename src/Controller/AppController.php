@@ -221,7 +221,7 @@ class AppController extends AbstractController
     /**
      * @Route("/app/newchapter/{id}", name="new_chapter")
      */
-    public function newChapter($id, Chapter $chapter = null, Request $request, EntityManagerInterface $manager, UserInterface $user)
+    public function newChapter($id, Request $request, EntityManagerInterface $manager, UserInterface $user)
     {
         // barrre de recherche
         $searchForm = $this->createForm(SearchType::class, null);
@@ -236,9 +236,9 @@ class AppController extends AbstractController
             }
         }
 
-        if(!$chapter){
-            $chapter = new Chapter();
-        }
+        
+        $chapter = new Chapter();
+        
 
         $form = $this->createFormBuilder($chapter)
                     ->add('title')
