@@ -277,7 +277,7 @@ class AppController extends AbstractController
     /**
      * @Route("/app/{id}", name="book_show")
      */
-    public function showBook($id, Books $book, Request $request, UserInterface $user = null)
+    public function showBook($id, Books $book, Request $request)
     {
         // barrre de recherche
         $searchForm = $this->createForm(SearchType::class, null);
@@ -301,8 +301,7 @@ class AppController extends AbstractController
         return $this->render('app/showBook.html.twig', [
             'book' => $book,
             'chapters' => $chapters,
-            'formSearch' => $searchForm->createView(),
-            'user' => $user
+            'formSearch' => $searchForm->createView()
         ]);
     }
 

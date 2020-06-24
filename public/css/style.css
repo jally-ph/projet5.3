@@ -1,6 +1,8 @@
 
 
-
+body{
+    background-color: red;
+}
 
 /* BASE ********************************************************************************/
 
@@ -34,6 +36,48 @@
 }
 
 /* CATEGORY **************************************************************************/
+
+
+/* SHOW BOOK **************************************************************************/
+.detailsBook{
+    display: flex;
+    align-items: center;
+}
+
+.publicOrNotShowBook1{
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.completedOrNotShowBook1{
+    margin-right: 20px;
+}
+
+.btnEditBook{
+    margin-right: 20px;
+}
+
+.btnEditAndDelete{
+    margin-top: 20px;
+}
+
+.titleAndLikes{
+    display: flex;
+}
+
+/* SHOW CHAPTER **************************************************************************/
+.detailsChapter{
+    display: flex;
+    align-items: center;
+}
+
+.publicOrNotShowChapter{
+    margin-right: 20px;
+}
+
+.completedOrNotShowChapter{
+    margin-right: 20px;
+}
 
 /* FORM NEW BOOK **************************************************************************/
 .formNewBookContent{

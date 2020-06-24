@@ -76,10 +76,7 @@ class Books
      */
     private $category;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Like::class, mappedBy="book", orphanRemoval=true)
-     */
-    private $likes;
+    
 
    
 
