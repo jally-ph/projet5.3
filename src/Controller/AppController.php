@@ -147,10 +147,31 @@ class AppController extends AbstractController
         $bookRepository = $this->getDoctrine()->getRepository(Books::class);
         $books = $bookRepository->findByCategory($category);
 
+        $bookslength = count($books);
+        $booksFound = [];
+
+        for($i=0; $i < $bookslength ; $i++){
+            
+            $publicOrNot = $books[$i]->getPublic();
+            if($publicOrNot == true){
+                $booksFound[] = $books[$i];
+            }
+
+        }
+
+        if($booksFound == null){
+            $categoryNull = "Cette catégorie est vide";   
+        }
+        else{
+            $categoryNull = '';
+        }
+
         return $this->render('app/category.html.twig', [
-            'books' => $books,
+            
             'category' => $category,
             'formSearch' => $searchForm->createView(),
+            'booksFound' => $booksFound,
+            'categoryNull' => $categoryNull,
             'user' => $user
         ]);
     }

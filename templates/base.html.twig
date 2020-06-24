@@ -11,6 +11,12 @@
             <script src="https://kit.fontawesome.com/7e70710549.js" crossorigin="anonymous"></script>
             {# style css #}
             <link href="{{ asset('../public/css/style.css') }}" rel="stylesheet">
+            {# mediaqueries #}
+            <link href="{{ asset('../public/css/mediaqueries.css') }}" rel="stylesheet">
+            {# viewport #}
+            <meta name="viewport" content="initial-scale=1">
+            {# favicon #}
+            <link rel="icon" href="{{ asset('../public/img/W.jpg') }}" />
         {% endblock %}
         
     </head>
@@ -66,6 +72,12 @@
                 {% block body %}{% endblock %}
             {% endautoescape %}
         </div>
+
+        <footer>
+            {% block footer %}
+                Site réalisé par J.Phejar 2020 ©
+            {% endblock %}
+        </footer>
         
         {% block javascripts %}
             <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
