@@ -156,7 +156,7 @@ class SecurityController extends AbstractController
             }
         }
 
-        if($users == null){
+        if($usersFound == null){
             $usersFound = '';   
         }
 

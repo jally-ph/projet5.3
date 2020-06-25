@@ -97,7 +97,7 @@ class AppFixtures extends Fixture
                 //Créer 4 comments
                 for($k = 1; $k <= mt_rand(3, 6); $k++)
                 {
-                    $content = '<p>'. join($faker->paragraphs(2), '</p><p>') .'</p>';
+                    $content = '<p>'. join($faker->paragraphs(2));
 
                     $comment = new Comment();
 
